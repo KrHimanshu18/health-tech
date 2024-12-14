@@ -5,6 +5,8 @@ import Home from "./components/Home/Home";
 import Login from "./components/Home/Login";
 import Appointment from "./components/Appointment/Appointment";
 import Dispensary from "./components/Dispensary/Dispensary";
+import PastPurchase from "./components/Dispensary/comp/PastPurchase";
+import PurchaseMedicine from "./components/Dispensary/comp/PurchaseMedicine";
 import MainReimburse from "./components/Reimburse/MainReimburse";
 import NewApplication from "./components/Reimburse/comp/NewApplication";
 import PastApplicaion from "./components/Reimburse/comp/PastApplication";
@@ -16,8 +18,13 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+
         <Route path="/appointment" element={<Appointment />} />
+
         <Route path="/dispensary" element={<Dispensary />} />
+        <Route path="/dispensary/pastPurchase" element={<PastPurchase />} />
+        <Route path="/dispensary/purchase" element={<PurchaseMedicine />} />
+
         <Route path="/mainReimburse" element={<MainReimburse />} />
         <Route
           path="/mainReimburse/pastApplication"
@@ -27,6 +34,7 @@ export default function App() {
           path="/mainReimburse/newApplication"
           element={<NewApplication />}
         />
+
         <Route path="/status" element={<Status />} />
       </Routes>
     </Router>
