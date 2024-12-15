@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 function Home() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [logIn, setLogIn] = useState(true);
+  const location = useLocation();
+  const user = location.state?.user || "Guest";
 
   const isLogIn = () => {
     setShowDropdown((prev) => !prev);
@@ -55,7 +57,7 @@ function Home() {
       </div>
 
       {/* HEADER */}
-      <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <header className="d-flex align-items-center justify-content-center py-3 mb-4 border-bottom">
         <div className="col-md-3 mb-2 mb-md-0">
           <a
             href="#"
@@ -86,46 +88,65 @@ function Home() {
           </li>
         </ul>
 
-        <div className="col-md-3 text-end mx-2">
-          <button
-            type="button"
-            className="btn btn-outline-primary me-2"
-            onClick={isLogIn}
-          >
-            Login
-          </button>
-          <button type="button" className="btn btn-primary" onClick={isSignIn}>
-            Sign-up
-          </button>
-          {showDropdown && (
-            <div className="dropdown-menu show position-absolute">
-              <a
-                className="dropdown-item"
-                onClick={() =>
-                  navigate("./login", { state: { logIn, user: "patient" } })
-                }
-              >
-                Benificiary
-              </a>
-              <a
-                className="dropdown-item"
-                onClick={() =>
-                  navigate("./login", { state: { logIn, user: "hospital" } })
-                }
-              >
-                Hospital
-              </a>
-              <a
-                className="dropdown-item"
-                onClick={() =>
-                  navigate("./login", { state: { logIn, user: "authority" } })
-                }
-              >
-                Authority
-              </a>
-            </div>
-          )}
-        </div>
+        {user === "Guest" && (
+          <div className="col-md-3 text-end mx-2">
+            <button
+              type="button"
+              className="btn btn-outline-primary me-2"
+              onClick={isLogIn}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={isSignIn}
+            >
+              Sign-up
+            </button>
+            {showDropdown && (
+              <div className="dropdown-menu show position-absolute">
+                <a
+                  className="dropdown-item"
+                  onClick={() => {
+                    navigate("./login", { state: { logIn, user: "patient" } });
+                  }}
+                >
+                  Benificiary
+                </a>
+                <a
+                  className="dropdown-item"
+                  onClick={() => {
+                    navigate("./login", { state: { logIn, user: "hospital" } });
+                  }}
+                >
+                  Hospital
+                </a>
+                <a
+                  className="dropdown-item"
+                  onClick={() => {
+                    navigate("./login", {
+                      state: { logIn, user: "authority" },
+                    });
+                  }}
+                >
+                  Authority
+                </a>
+              </div>
+            )}
+          </div>
+        )}
+        {user != "Guest" && (
+          <div className="col-md-3 text-end mx-2">
+            <button
+              type="button"
+              className="btn btn-outline-primary me-2"
+              onClick={isLogIn}
+            >
+              Log Out
+            </button>
+          </div>
+        )}
       </header>
 
       {/* MAIN SECTION */}
@@ -170,9 +191,13 @@ function Home() {
               style={{ backgroundImage: "url('unsplash-photo-1.jpg')" }}
             >
               <a
-                onClick={() =>
-                  navigate("./dispensary", { state: { user: "patient" } })
-                }
+                onClick={() => {
+                  if (user != "Guest") {
+                    navigate("./dispensary", { state: { user } });
+                  } else {
+                    alert("Please Login First");
+                  }
+                }}
                 className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1"
               >
                 <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
@@ -206,9 +231,13 @@ function Home() {
             >
               <a
                 className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1"
-                onClick={() =>
-                  navigate("./mainReimburse", { state: { user: "patient" } })
-                }
+                onClick={() => {
+                  if (user != "Guest") {
+                    navigate("./mainReimburse", { state: { user } });
+                  } else {
+                    alert("Please Login First");
+                  }
+                }}
               >
                 <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
                   REIMBURSMENTS
@@ -240,7 +269,13 @@ function Home() {
               style={{ backgroundImage: "url('unsplash-photo-1.jpg')" }}
             >
               <a
-                onClick={() => navigate("./status")}
+                onClick={() => {
+                  if (user != "Guest") {
+                    navigate("./status", { state: { user } });
+                  } else {
+                    alert("Please Login First");
+                  }
+                }}
                 className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1"
               >
                 <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">

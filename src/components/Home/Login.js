@@ -1,9 +1,10 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Login() {
   const location = useLocation();
   const { logIn, user } = location.state || {};
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -187,7 +188,13 @@ function Login() {
             Remember me
           </label>
         </div>
-        <button className="btn btn-primary w-100 py-2" type="submit">
+        <button
+          className="btn btn-primary w-100 py-2"
+          type="submit"
+          onClick={() => {
+            navigate("/", { state: { user } });
+          }}
+        >
           {logIn ? "Log In" : "Sign In"}
         </button>
       </main>

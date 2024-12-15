@@ -157,22 +157,39 @@ function Dispensary() {
           <h2 className="mb-4 text-center">Medicine Issued</h2>
 
           {/* Form to Update Stock */}
-          <form
-            className="w-100 mb-4"
-            onSubmit={(e) => {
-              e.preventDefault(); // Prevent page reload
-              const medicineName = e.target.medicineName.value;
-              const quantity = e.target.quantity.value;
+          <form className="w-100 mb-4">
+            <div className="row g-3">
+              {/* Medicine Name Input */}
+              <div className="col-md-4">
+                <label htmlFor="medicineName" className="form-label">
+                  Benificiary Number
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="medicineName"
+                  name="medicineName"
+                  placeholder="Enter Benificiary Number"
+                  required
+                />
+              </div>
 
-              if (medicineName && quantity) {
-                setStock((prevStock) => [
-                  ...prevStock,
-                  { medicineName, quantity: parseInt(quantity, 10) },
-                ]);
-                e.target.reset(); // Reset form fields
-              }
-            }}
-          >
+              {/* Quantity Input */}
+              <div className="col-md-4">
+                <label htmlFor="quantity" className="form-label">
+                  Prescription Image
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="quantity"
+                  name="quantity"
+                  placeholder="Upload Prescription"
+                  required
+                />
+              </div>
+            </div>
+
             <div className="row g-3">
               {/* Medicine Name Input */}
               <div className="col-md-8">
