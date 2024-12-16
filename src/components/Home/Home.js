@@ -11,6 +11,9 @@ function Home() {
     setShowDropdown((prev) => !prev);
     setLogIn(true);
   };
+  const isLogOut = () => {
+    navigate("/", { state: { logIn, user: "Guest" } });
+  };
   const isSignIn = () => {
     setShowDropdown((prev) => !prev);
     setLogIn(false);
@@ -141,7 +144,7 @@ function Home() {
             <button
               type="button"
               className="btn btn-outline-primary me-2"
-              onClick={isLogIn}
+              onClick={isLogOut}
             >
               Log Out
             </button>
