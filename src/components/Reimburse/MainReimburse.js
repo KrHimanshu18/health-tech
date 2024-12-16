@@ -1,5 +1,6 @@
-import React from "react";
+import { React, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Verification from "./comp/Verification";
 
 function MainReimburse() {
   const navigate = useNavigate();
@@ -14,6 +15,53 @@ function MainReimburse() {
 
   const location = useLocation();
   const { user } = location.state || {};
+
+  const [verification, setVerification] = useState([
+    {
+      beneficiaryId: "BF001",
+      prescriptionId: "RX001",
+      billNumber: "B1234",
+      date: "2024-01-01",
+      med: {
+        name: "Paracetamol",
+        quantity: 2,
+        amount: 50,
+      },
+      totalAmount: 100,
+    },
+    {
+      beneficiaryId: "BF002",
+      prescriptionId: "RX002",
+      billNumber: "B5678",
+      date: "2024-02-15",
+      med: {
+        name: "Ibuprofen",
+        quantity: 3,
+        amount: 75,
+      },
+      totalAmount: 225,
+    },
+    {
+      beneficiaryId: "BF003",
+      prescriptionId: "RX003",
+      billNumber: "B9101",
+      date: "2024-03-10",
+      med: {
+        name: "Amoxicillin",
+        quantity: 1,
+        amount: 200,
+      },
+      totalAmount: 200,
+    },
+  ]);
+
+  function isVerified(id) {
+    setVerification((prevApplication) => {
+      return prevApplication.filter((noteItem, index) => {
+        return index !== id;
+      });
+    });
+  }
 
   return (
     <div>
@@ -156,7 +204,30 @@ function MainReimburse() {
       )}
 
       {/* WHEN USER IS AUTHORITY  */}
-      {user === "authority" && <div></div>}
+      {user === "authority" && (
+        <div className="pastApplication d-flex flex-column justify-content-center">
+          <h1 className="h3 mb-3 fw-normal ms-4 mt-4">Pending Applicatons</h1>
+          {verification.map((verification, index) => {
+            return (
+              <div>
+                <Verification
+                  key={index}
+                  id={index}
+                  beneficiaryId={verification.beneficiaryId}
+                  prescriptionId={verification.prescriptionId}
+                  billNumber={verification.billNumber}
+                  date={verification.date}
+                  medName={verification.med.name}
+                  quantity={verification.med.quantity}
+                  amount={verification.med.amount}
+                  totalAmount={verification.totalAmount}
+                  onVerify={isVerified}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* <!-- FOOTER --> */}
       <footer className="py-3 my-4">
